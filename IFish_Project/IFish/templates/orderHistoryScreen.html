@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container d-flex flex-column  mt-5" style="min-height: 497px">
+   <h2 class="text-center">Историја на нарачки</h2>
+   <div class="row mt-5 justify-content-between" style="border-bottom: 1px solid black">
+       <div class="col-2"><h6 class="text-center">ID</h6></div>
+       <div class="col-2"><h6 class="text-center">Дата</h6></div>
+       <div class="col-2"><h6 class="text-center">Вкупно</h6></div>
+       <div class="col-2"><h6 class="text-center">Статус</h6></div>
+       <div class="col-2"><h6 class="text-center">Акции</h6></div>
+   </div>
+    {% for order in orders %}
+       <div class="row mt-1 justify-content-between" style="border-bottom: 1px solid black;height: 50px">
+           <div class="col-2 d-flex align-items-center justify-content-center"><h6>{{ order.id }}</h6></div>
+           <div class="col-2 d-flex align-items-center justify-content-center"><h6 class="text-center">{{ order.createdAt.day}}.{{ order.createdAt.month}}.{{ order.createdAt.year}} {{ order.createdAt.hour}}:{{ order.createdAt.minute}}:{{ order.createdAt.second}}</h6></div>
+           <div class="col-2 d-flex align-items-center justify-content-center"><h6 class="text-center">{{ order.totalPrice}} ден</h6></div>
+           <div class="col-2 d-flex align-items-center justify-content-center"><h6 class="text-center">{% if order.isDelivered %}Доставена{% elif order.isShipped%}Испратена{% else %}Процесирање{% endif %}</h6></div>
+           <div class="col-2 d-flex align-items-center justify-content-center"><a href="{% url 'orderScreen' order.id%}"><button class="btn btn-primary">Детали</button></a></div>
+       </div>
+    {% endfor %}
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row" style="min-height: 497px;margin:0px;margin-bottom: -50px">
+    <div class="col-3 d-flex flex-column justify-content-start align-items-center" style="background-color:#14C7DF">
+        <a href="{% url 'addProductScreen' %}" class="text-light mt-5 fw-bold" style="text-decoration: none;font-size: 20px;">Додади производ</a>
+        <a href="{% url 'ordersScreen' %}" class="text-light mt-5 fw-bold" style="text-decoration: none;font-size: 20px;">Нарачки</a>
+        <a href="{% url 'productsScreen' %}" class="text-light mt-5 fw-bold" style="text-decoration: none;font-size: 20px;">Продукти</a>
+    </div>
+    <div class="col-9 d-flex flex-column align-items-center">
+        <h2 class="text-center mt-5">Додади производ</h2>
+        <form method="POST" class="w-50" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-flex justify-content-center align-items-center" >
+                <button type="submit" class="btn btn-primary btn-lg mb-5">Додади произвоид</button>
+                {% if success %}<p>Продуктот е успешно додаден</p>{% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

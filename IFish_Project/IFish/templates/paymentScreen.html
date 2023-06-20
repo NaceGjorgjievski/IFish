@@ -1,0 +1,80 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container d-flex flex-column align-items-center mt-2" style="min-height: 497px">
+    <div class="d-flex justify-content-center align-items-center w-50">
+        <div class="w-50">
+            <p class="text-warning">Адреса</p>
+            <hr class="border-3 opacity-100 border-warning">
+        </div>
+          <div class="w-50">
+            <p class="text-warning">Плаќање</p>
+            <hr class="border-3 opacity-100 border-warning">
+        </div>
+    </div>
+   <h2 class="text-center">Плаќање</h2>
+    <form method="POST" class="w-25">
+        {% csrf_token %}
+        <div class="d-flex justify-content-center flex-column mt-5">
+           <div class="w-100">
+                <label for="cardHolder" class="form-label ms-1">Име и Презиме</label>
+                <input type="text" name="cardHolder"  class="form-control w-10 {% if invalidCardHolder %}is-invalid{% endif %}" aria-describedby="cardHolderFeedback" required id="cardHolder" />
+                {% if invalidCardHolder %}
+                    <div id="cardHolderFeedback" class="invalid-feedback">
+                        {{ invalidCardHolder }}
+                    </div>
+                {% endif %}
+           </div>
+            <div class="w-100">
+                <label for="cardNumber" class="form-label ms-1 mt-3">Број на картичка</label>
+                <input type="text" name="cardNumber" maxlength="16" class="form-control w-10 {% if invalidCardNumber %}is-invalid{% endif %}" aria-describedby="cardNumberFeedback" required id="cardNumber" />
+                {% if invalidCardNumber %}
+                    <div id="cardNumberFeedback" class="invalid-feedback">
+                        {{ invalidCardNumber }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="w-100">
+                <label for="CVV" class="form-label ms-1 mt-3">CVV2/CVC2</label>
+                <input type="text" name="CVV" maxlength="3"  class="form-control w-10 {% if invalidCVV %}is-invalid{% endif %}" aria-describedby="CVVFeedback" required id="CVV" />
+                {% if invalidCVV %}
+                    <div id="CVVFeedback" class="invalid-feedback">
+                        {{ invalidCVV }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="w-100">
+                <label for="cardHolder" class="form-label ms-1 mt-3">CVV2/CVC2</label>
+                <div class="d-flex justify-content-between">
+                    <select class="form-select me-3" aria-label="Default select example">
+                      <option selected value="1">01</option>
+                      <option value="2">02</option>
+                      <option value="3">03</option>
+                      <option value="4">04</option>
+                      <option value="5">05</option>
+                      <option value="6">06</option>
+                      <option value="7">07</option>
+                      <option value="8">08</option>
+                      <option value="9">09</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                    </select>
+                    <select class="form-select" aria-label="Default select example">
+                      <option selected value="2024">24</option>
+                      <option selected value="2025">25</option>
+                      <option selected value="2026">26</option>
+                      <option selected value="2027">27</option>
+                      <option selected value="2028">28</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type=submit class="btn mt-5 btn-lg btn-primary">Плати</button>
+        </div>
+    </form>
+
+</div>
+
+{% endblock content %}

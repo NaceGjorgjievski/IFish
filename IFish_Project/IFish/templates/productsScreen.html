@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row" style="min-height: 80vh;margin:0px;margin-bottom: -50px">
+    <div class="col-3 d-flex flex-column justify-content-start align-items-center" style="background-color:#14C7DF">
+        <a href="{% url 'addProductScreen' %}" class="text-light mt-5 fw-bold" style="text-decoration: none;font-size: 20px;">Додади производ</a>
+        <a href="{% url 'ordersScreen' %}" class="text-light mt-5 fw-bold" style="text-decoration: none;font-size: 20px;">Нарачки</a>
+        <a href="{% url 'productsScreen' %}" class="text-light mt-5 fw-bold" style="text-decoration: none;font-size: 20px;">Продукти</a>
+    </div>
+    <div class="col-9 d-flex flex-column align-items-center">
+        <h2 class="text-center mt-5">Продукти</h2>
+        <div class="row mt-5 justify-content-between w-100" style="border-bottom: 1px solid black">
+           <div class="col-2"><h6 class="text-center">Слика</h6></div>
+           <div class="col-2"><h6 class="text-center">Име</h6></div>
+           <div class="col-2"><h6 class="text-center">Категорија</h6></div>
+           <div class="col-2"><h6 class="text-center">Цена</h6></div>
+           <div class="col-2"><h6 class="text-center">Акции</h6></div>
+        </div>
+        {% for product in products %}
+           <div class="row mt-1 justify-content-between w-100" style="border-bottom: 1px solid black;height: 50px">
+               <div class="col-2 d-flex align-items-center justify-content-center h-100"><img style="height: 90%" src="{{ MEDIA_URL }}{{ product.image.url }}"/></div>
+               <div class="col-2 d-flex align-items-center justify-content-center"><h6 class="text-center">{{ product.productName}}</h6></div>
+               <div class="col-2 d-flex align-items-center justify-content-center"><h6 class="text-center">{{ product.category}}</h6></div>
+               <div class="col-2 d-flex align-items-center justify-content-center"><h6 class="text-center">{{ product.price }} ден</h6></div>
+               <div class="col-2 d-flex align-items-center justify-content-center"><a href="{% url 'productEditScreen' product.id %}"><button class="btn btn-primary">Измени</button></a></div>
+           </div>
+        {% endfor %}
+        <div class="mb-5 mt-5">
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

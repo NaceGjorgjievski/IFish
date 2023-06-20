@@ -1,0 +1,69 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container d-flex flex-column  mt-5" style="min-height: 497px">
+   <h2 class="text-center">Нарачка {{ order.id }}</h2>
+   <div class="row mt-5 justify-content-around">
+       <div class="col-5">
+           <div class="row border border-1 border-dark rounded">
+               <h6>Испорака</h6>
+               <p><strong>Име:</strong> {{ shippingInfo.name }} {{ shippingInfo.surname }}</p>
+               <p><strong>Адреса:</strong> {{ shippingInfo.address }}, {{ shippingInfo.city }}</p>
+               <p><strong>Телефон:</strong> {{ shippingInfo.contact }}</p>
+           </div>
+            <div class="row border border-1 mt-5 border-dark rounded">
+               <h6>Продукти</h6>
+               {% for cartItem in cartItems %}
+                    <div class="row ms-0 me-0 align-items-center mt-0" style="height: 80px;background-color: lightgray">
+                        <img class="col-3 img-fluid h-75"  src="{{ MEDIA_URL }}{{ cartItem.product.image.url }}">
+                        <h6 class="col-3">{{ cartItem.product.productName }}</h6>
+                        <h5 class="col-3">{{ cartItem.quantity }}</h5>
+                        <h5 class="col-3">{{ cartItem.product.price }}ден</h5>
+                    </div>
+               {% endfor %}
+           </div>
+       </div>
+       <div class="col-5">
+           <div class="row border border-1 border-dark rounded">
+               <h6>Нарачка</h6>
+               <div class="row justify-content-between">
+                   <p class="col-6">Продукти:</p>
+                   <p class="col-6 text-end">{{ order.itemsPrice }}.00 ден</p>
+               </div>
+               <hr style="width: 90%;margin: auto">
+               <div class="row justify-content-between">
+                   <p class="col-6">Испорака:</p>
+                   <p class="col-6 text-end">{{ order.shippingPrice }}.00 ден</p>
+               </div>
+               <hr style="width: 90%;margin: auto">
+               <div class="row justify-content-between">
+                   <p class="col-6"><strong>Вкупно:</strong></p>
+                   <p class="col-6 text-end"><strong>{{ order.totalPrice }}.00 ден</strong></p>
+               </div>
+           </div>
+          <div class="row border border-1 border-dark rounded mt-5">
+               <h6>Акции</h6>
+               <div class="row justify-content-center mb-2 mt-2">
+                   {% if order.isShipped %}
+                       <a href="#" class="d-flex justify-content-center" style="text-decoration: none;width: 90%"><button class="btn btn-primary w-100" disabled>Испрати нарачка</button></a>
+                   {% else %}
+                       <a href="{% url 'actionOrderSent' order.id %}" class="d-flex justify-content-center" style="text-decoration: none;width: 90%"><button class="btn btn-primary w-100">Испрати нарачка</button></a>
+                   {% endif %}
+
+               </div>
+               <hr style="width: 90%;margin: auto">
+               <div class="row d-flex justify-content-center mb-2 mt-2">
+                   {% if order.isDelivered %}
+                       <a href="#" class="d-flex justify-content-center" style="text-decoration: none;width: 90%"><button class="btn btn-primary w-100" disabled>Нарачката е пристигната</button></a>
+                   {% else %}
+                       <a href="{% url 'actionOrderArrived' order.id %}" class="d-flex justify-content-center" style="text-decoration: none;width: 90%"><button class="btn btn-primary w-100">Нарачката е пристигната</button></a>
+                   {% endif %}
+
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+
+{% endblock content %}

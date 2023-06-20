@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container d-flex flex-column align-items-center mt-2" style="min-height: 497px">
+    <div class="d-flex justify-content-center align-items-center w-50">
+        <div class="w-50">
+            <p class="text-warning">Адреса</p>
+            <hr class="border-3 opacity-100 border-warning">
+        </div>
+          <div class="w-50">
+            <p>Плаќање</p>
+            <hr>
+        </div>
+    </div>
+   <h2 class="text-center">Адреса</h2>
+    <form method="POST" class="w-25">
+        {% csrf_token %}
+        <label for="" class="form-label ms-1 mt-3">Име</label>
+        {{ form.name }}
+        <label for="" class="form-label mt-3 ms-1">Презиме</label>
+        {{ form.surname }}
+        <label for="" class="form-label mt-3 ms-1">Адреса</label>
+        {{ form.address }}
+        <label for="" class="form-label mt-3 ms-1">Град</label>
+        {{ form.city }}
+        <label for="" class="form-label mt-3 ms-1">Поштенски код</label>
+        {{ form.postal_code }}
+        <label for="" class="form-label mt-3 ms-1">Телефон</label>
+        {{ form.contact }}
+        <div class="d-flex justify-content-center">
+            <button class="btn mt-5 btn-lg btn-primary">Продолжи</button>
+        </div>
+    </form>
+
+</div>
+
+{% endblock content %}

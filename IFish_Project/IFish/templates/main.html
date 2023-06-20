@@ -1,0 +1,101 @@
+{% load static %}
+{% load my_tags %}
+{% get_objects as categories %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>IFish</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg" style="background-color: #14C7DF;height: 60px">
+      <div class="container-fluid h-100">
+        <div class="d-flex h-100">
+            <img class="img-fluid" src="{% static 'logo.png' %}">
+            <h2 class="text-light ms-1">iFish</h2>
+        </div>
+        <div class="collapse navbar-collapse h-100 ms-5" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active text-light fw-bold" style="font-size: 18px" aria-current="page" href="{% url 'home' %}">Почетна</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle  text-light fw-bold" style="font-size: 18px" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Производи
+              </a>
+              <ul class="dropdown-menu">
+                {% for category in categories %}
+                    <li><a class="dropdown-item" href="{% url 'categoryScreen' category.id %}">{{ category }}</a></li>
+                {% endfor %}
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link  text-light fw-bold" style="font-size: 18px" href="#">Контакт</a>
+            </li>
+          </ul>
+        </div>
+        <div class="h-100">
+            {% if request.user.is_authenticated %}
+
+                <nav class="navbar navbar-expand-lg h-100" style="background-color: #14C7DF;padding: 0px">
+                     <div class="collapse navbar-collapse h-100 ms-5" id="navbarSupportedContent">
+                          <ul class="navbar-nav me-auto mb-2 mb-lg-0 h-100">
+                            <li class="nav-item dropdown h-100 me-5">
+                              <a class="nav-link dropdown-toggle h-100 text-light" style="font-size: 18px;padding: 0px" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                               <img class="h-100" src="{% static 'account.png' %}">
+                                  {{ request.user.username}}
+                              </a>
+                              <ul class="dropdown-menu">
+                                {% if request.user.is_superuser %}
+                                <li><a class="dropdown-item" href="{% url 'addProductScreen' %}">Dashboard</a></li>
+                                {% else %}
+                                <li><a class="dropdown-item" href="{% url 'orderHistoryScreen' %}">Нарачки</a></li>
+                                {% endif %}
+                                <li><a class="dropdown-item" href="{% url 'logoutUser' %}">Одјави се</a></li>
+                              </ul>
+                            </li>
+                            {% if not request.user.is_superuser %}
+                            <li class="nav-item">
+                                <a href="{% url 'cartScreen' %}"><img class="img-fluid h-100" src="{% static 'cart.png' %}"></a>
+                                <a class="bg-danger text-light" style="text-decoration: none;padding-bottom: 3px;padding-right: 8px;padding-left: 8px;border-radius: 50%">{% get_cartItems request%}</a>
+                            </li>
+                            {% endif %}
+                          </ul>
+                    </div>
+                </nav>
+
+            {% else %}
+                <a class="me-4" href="{% url 'loginScreen' %}" style="text-decoration: none;color: white"><img class="img-fluid h-100" src="{% static 'account.png' %}">
+                    Најави се</a>
+                <a href="#"><img class="img-fluid h-100" src="{% static 'cart.png' %}"></a>
+            {% endif %}
+
+        </div>
+      </div>
+    </nav>
+
+    {% block content %}
+
+    {% endblock %}
+
+    <div class="container-fluid mt-5" style="background-color: #14C7DF; height: 100px;">
+        <div class="container d-flex justify-content-between text-light h-100" >
+             <div class="h-100">
+                <h2>Контакти</h2>
+                <p>email: ifish@gmail.com<br>callcenter: 123-345-567</p>
+
+            </div>
+             <div class="h-100">
+                <h2>Следете не</h2>
+                <img class="img-fluid h-25" src="{% static 'fb.png' %}"> <span>Facebook</span>
+             </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>
