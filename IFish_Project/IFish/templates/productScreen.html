@@ -16,7 +16,7 @@
                 <label for="exampleFormControlInput1" class="form-label">Количина</label>
                 <input type="number" class="form-control" id="quantity" name="quantity" placeholder="1">
             </div>
-            <button class="btn btn-primary mt-4 w-75 fw-bold">Додади во кошничка</button>
+            <button class="btn btn-primary mt-4 w-75 fw-bold" {% if not request.user.is_authenticated or request.user.is_superuser %}disabled{% endif %}>Додади во кошничка</button>
         </form>
 
         <div>
